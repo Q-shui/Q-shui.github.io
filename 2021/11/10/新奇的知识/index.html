@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一、iostream​    将信息送至终端。需要C++的数据输入输出，但这不是C++程序本身定义的（同C语言一样）,而是由C++的一套面向对象的类层次体系提供支持，并作为C++标准库的一员。 123cout &lt;&lt; &quot;Please enter your name:&quot;;string user_name;cin &gt;&gt; user_name;  ​    就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2021/11/10/%E6%96%B0%E5%A5%87%E7%9A%84%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、iostream​    将信息送至终端。需要C++的数据输入输出，但这不是C++程序本身定义的（同C语言一样）,而是由C++的一套面向对象的类层次体系提供支持，并作为C++标准库的一员。 123cout &lt;&lt; &quot;Please enter your name:&quot;;string user_name;cin &gt;&gt; user_name;  ​    就">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-10T00:34:43.867Z">
+<meta property="article:modified_time" content="2021-10-30T15:22:13.800Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-新奇的知识" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/11/10/%E6%96%B0%E5%A5%87%E7%9A%84%E7%9F%A5%E8%AF%86/" class="article-date">
+  <time class="dt-published" datetime="2021-11-10T00:34:43.867Z" itemprop="datePublished">2021-11-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!--这个博客是在看Essential C++的时候一些新奇的知识-->
+
+<h4 id="一、iostream"><a href="#一、iostream" class="headerlink" title="一、iostream"></a>一、iostream</h4><p>​    将信息送至终端。需要C++的数据输入输出，但这不是C++程序本身定义的（同C语言一样）,而是由C++的一套面向对象的类层次体系提供支持，并作为C++标准库的一员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;Please enter your name:&quot;</span>;</span><br><span class="line">string user_name;</span><br><span class="line">cin &gt;&gt; user_name;</span><br></pre></td></tr></table></figure>
+
+<p>​    就比如这几个语句，用已经定义好的cout对象，将信息写到终端中。output（&lt;&lt;）运算符可以把数据<u>定向</u>到cout。</p>
+<p>​    再用已经定义好的cin对象读取对象在终端上的输入内容。通过input运算符（&gt;&gt;）将输入内容<u>定向</u>到具有适当类型的对象上，cin首先读取信息，通过&gt;&gt;把信息定向到user_name，这样user_name的内容就会变成所输入的内容。</p>
+<h4 id="二、return"><a href="#二、return" class="headerlink" title="二、return"></a>二、return</h4><p>​    如果我们定义的main函数是int型的但是我们并没有return语句，在编译的时候会自动加上也就是说</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样是可以的，但在写程序的时候尽量加上。</p>
+<h4 id="三、定义和初始化对象"><a href="#三、定义和初始化对象" class="headerlink" title="三、定义和初始化对象"></a>三、定义和初始化对象</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num_tries = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    这是我们最常用的一种初始化方式，用assignment运算符（=）进行初始化，这个操作系沿袭自C语言，如果对象是内置类型或对象可以单一值加以初始化，那就没问题。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">num_tries</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    这是另一种初始化方式，称为“构造函数语法”，为什么有了第一种方式还需要这一种呢？举个例子，当面对标准库中的复数类，就需要两个初值，一个实部，一个虚部。这时便引入了用来处理<u>“多值初始化”</u>的构造函数初始化语法，如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;complex&gt;</span></span></span><br><span class="line"><span class="function">complex&lt;<span class="keyword">double</span>&gt; <span class="title">purei</span><span class="params">(<span class="number">0</span>, <span class="number">7</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>​    对于complex在此不解释，只需要知道他是一个模板类，这段代码是定义了一个复数0 + 7i，此外，还有一种应用于数组或容器的列表初始化的方式。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> vals = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span> &#125;;</span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt; vvals = (vals, vals + size);</span><br></pre></td></tr></table></figure>
+
+<p>​    vals的定义和初始化就是列表初始化，但另一个vector对象的初始化却不太一样，这个使用构造函数初始化，传给vvals两个值，这两个值都是<u>内存位置</u>，标出了用以将vector初始化的元素范围。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/11/10/%E6%96%B0%E5%A5%87%E7%9A%84%E7%9F%A5%E8%AF%86/" data-id="ckvssilfg0003ysvt7b9od0np" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/11/10/Cprimerpluse/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/11/10/%E6%B5%8B%E8%AF%95%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/11/10/%E6%B5%8B%E8%AF%95/">测试</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/10/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A1/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/10/Cprimerpluse/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/10/%E6%96%B0%E5%A5%87%E7%9A%84%E7%9F%A5%E8%AF%86/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/10/%E6%B5%8B%E8%AF%95%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
