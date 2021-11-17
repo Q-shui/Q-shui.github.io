@@ -145,65 +145,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/17/test-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/17/test-md/" class="post-title-link" itemprop="url">test.md</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-17 08:53:27 / 修改时间：08:53:45" itemprop="dateCreated datePublished" datetime="2021-11-17T08:53:27+08:00">2021-11-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/.com//image-20211117085340414.png" alt="image-20211117085340414"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/17/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A3-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -227,8 +168,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-17 08:37:47" itemprop="dateCreated datePublished" datetime="2021-11-17T08:37:47+08:00">2021-11-17</time>
+              <time title="创建时间：2021-11-17 08:37:47 / 修改时间：09:46:49" itemprop="dateCreated datePublished" datetime="2021-11-17T08:37:47+08:00">2021-11-17</time>
             </span>
 
           
@@ -242,7 +184,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="通配符过滤数据"><a href="#通配符过滤数据" class="headerlink" title="通配符过滤数据"></a>通配符过滤数据</h1><h4 id="LIKE操作符"><a href="#LIKE操作符" class="headerlink" title="LIKE操作符"></a>LIKE操作符</h4><p>假设要搜寻的数据只需要有其中的一部分即可，即要搜索文本中带有anvil的字符就，可以使用通配符。</p>
+<p>通配符：用来匹配值的一部分的特殊字符。</p>
+<p>搜索模式：有字面值，通配符或两者结合组成的搜索条件。</p>
+<h6 id="百分号-通配符"><a href="#百分号-通配符" class="headerlink" title="百分号(%)通配符"></a>百分号(%)通配符</h6><p>%表示任意字符出现的次数。</p>
+<p><img src="/.com//1.png"></p>
+<p>这个例子中就搜索所有以jet开头的product，并且不管jet后面有多少字符。</p>
+<p><img src="/.com//2.png"></p>
+<p>这个例子检索含有anvil的product，并且不管anvil前面和后面有多少字符。</p>
+<p>%也可以检索中间，例如我们要检索所有以s开头e结尾的product。</p>
+<p><img src="/.com//3.png"></p>
+<p>如果只有一个%会怎么样？</p>
+<p><img src="/.com//4.png"></p>
+<p>会发现，这会搜索所有的product。</p>
+<!--要注意的是%通配符不会检索NULL，即空值。-->
+
+
+
+<h6 id="下划线-通配符"><a href="#下划线-通配符" class="headerlink" title="下划线(_)通配符"></a>下划线(_)通配符</h6><p>下划线通配符的作用和%类似，但_只检索单个字符。</p>
+<p><img src="/.com//5.png"></p>
+<p>这个例子中_匹配到1和2 但.5没有被匹配到。</p>
+<p>同时要注意的是_和ton之间有没有空格要根据原来的prod_name有没有空格，毕竟空格也是一个字符。</p>
+<p><img src="/.com//6.png"></p>
+<p>没有空格可能就检索不出数据。但%不会出现这种情况。</p>
+<p>下面这几个例子体现了_与%的区别。</p>
+<p><img src="/.com//7.png"></p>
+<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>正则表达式用来检索匹配文本中特殊的串（即字符的集合）。</p>
+<h4 id="使用正则表达式"><a href="#使用正则表达式" class="headerlink" title="使用正则表达式"></a>使用正则表达式</h4><h6 id="基本字符匹配"><a href="#基本字符匹配" class="headerlink" title="基本字符匹配"></a>基本字符匹配</h6><p>从一个简单的例子开始，下面检索prod_name中包含文本1000的列。</p>
+<p><img src="/.com//8.png"></p>
+<p>除了LIKE被REGEXP替换之外，这个例子和之前的LIKE子句很相似。</p>
+<p>REGEXP就是正则表达式的符号。</p>
+<p>这个命令检索含有1000的列。</p>
+<p>在看下一个例子</p>
+<p><img src="/.com//9.png"></p>
+<p>这个例子却检索出两个列，这是因为 ‘  .  ‘操作符，这个是正则表达式里一个重要的字符，可以与任意字符匹配。</p>
+<p>但如果换成LIKE就不会有检索结果。</p>
+<p><img src="/.com//10.png"></p>
+<!--正则表达式匹配不区分大小写，如果要区分大小写，可以使用BINARY关键字，如 WHERE prod_name REGEXP BINARY 'Jetpack', 和WHERE prod_name REGEXP BINARY 'Jetpack' 是不同的。-->
+
+
+
+<h6 id="进行-or-匹配"><a href="#进行-or-匹配" class="headerlink" title="进行 or 匹配"></a>进行 or 匹配</h6><p>为进行搜索两个串之一，可以使用 | 操作符。</p>
+<p><img src="/.com//11.png"></p>
+<p>这个例子检索含有文本1000或2000的列，但要注意不能1000和|之间不能有空格，如果是’1000 | 2000’，就会检索含有文本 ‘1000 ’， ‘ 2000’的列，1000后面有个空格，2000前面有个空格。</p>
+<p>检索结果也会发生变化。</p>
+<p><img src="/.com//12-16371123942811.png"></p>
+<p>这个只有一列是因为，只含有‘空格’+ ‘2000’的列却不含有‘1000’ + ‘空格’的列。</p>
+<p>可以使用两个以上的条件，如‘1000|2000|3000’就检索含有1000或2000或3000的列。</p>
+<h6 id="匹配几个字符之一"><a href="#匹配几个字符之一" class="headerlink" title="匹配几个字符之一"></a>匹配几个字符之一</h6><p>如果想匹配特定的字符，且是单一字符可以使用[]括起来的字符来完成。</p>
+<p><img src="/.com//13.png"></p>
+<p>这个正则表达式[123] ton 表示匹配1或2或3，即1， 2， 3中的一个。</p>
+<p>事实上这个是[1|2|3]的缩写，但我们不能用’1|2|3 ton’,因为这会被认为检索含有’1’或’2’或’3 ton’的列。</p>
+<h6 id="匹配范围"><a href="#匹配范围" class="headerlink" title="匹配范围"></a>匹配范围</h6><p>集合可以用来定义要匹配的一个或多个字符。</p>
+<p>如[0123456789]可以写为[0-9]，但要注意前面的数字要小于后面的。[a-z]匹配所有字母。</p>
+<p><img src="/.com//14.png"></p>
+<p>这个例子匹配含有1-5之间的任意数字的列。</p>
+<p>正则表达式后面的内容将于下一篇博客讲述。</p>
+
       
     </div>
 
@@ -942,11 +940,72 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/15/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/15/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="post-title-link" itemprop="url">我的第一篇博客文章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-10-15 20:29:06 / 修改时间：20:44:42" itemprop="dateCreated datePublished" datetime="2021-10-15T20:29:06+08:00">2021-10-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##第一章</p>
+<p>–</p>
+<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>–</p>
+<p>##第三章</p>
+<p>–</p>
+<p>##用于测试写博客</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1011,7 +1070,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
