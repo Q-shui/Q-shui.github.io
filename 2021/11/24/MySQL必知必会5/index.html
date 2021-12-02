@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="创建计算字段本章介绍什么是计算字段，如何创建计算字段，以及在应用程序中使用别名来引用计算字段。 计算字段举个简单的例子，如果想要在一个搜索结果中既显示公司的名称，又显示公司的地址。我们无法直接 SELECT name, adress FROM TABLE;,因为这样显示的是两列搜索结果，有的计算字段就可以把两列搜索结果连接起来形成一个字段。 当列中存储的数据不是我们所直接需要的时候，我们就需要计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL必知必会5">
+<meta property="og:url" content="http://example.com/2021/11/24/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="创建计算字段本章介绍什么是计算字段，如何创建计算字段，以及在应用程序中使用别名来引用计算字段。 计算字段举个简单的例子，如果想要在一个搜索结果中既显示公司的名称，又显示公司的地址。我们无法直接 SELECT name, adress FROM TABLE;,因为这样显示的是两列搜索结果，有的计算字段就可以把两列搜索结果连接起来形成一个字段。 当列中存储的数据不是我们所直接需要的时候，我们就需要计算">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//image-20211124094002501.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124094724810.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124100027035.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124100205140.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124192856053.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124200039368.png">
+<meta property="og:image" content="http://example.com/.com//image-20211124200210128.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125091945247-16378193850851.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125135721323.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125135852863.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125135952750.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125140826872.png">
+<meta property="og:image" content="http://example.com/.com//image-20211125142006468.png">
+<meta property="article:published_time" content="2021-11-24T01:12:23.000Z">
+<meta property="article:modified_time" content="2021-11-25T06:20:51.712Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//image-20211124094002501.png">
+
+<link rel="canonical" href="http://example.com/2021/11/24/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MySQL必知必会5 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/24/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL必知必会5
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-24 09:12:23" itemprop="dateCreated datePublished" datetime="2021-11-24T09:12:23+08:00">2021-11-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-25 14:20:51" itemprop="dateModified" datetime="2021-11-25T14:20:51+08:00">2021-11-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a>创建计算字段</h1><p>本章介绍什么是计算字段，如何创建计算字段，以及在应用程序中使用别名来引用计算字段。</p>
+<h4 id="计算字段"><a href="#计算字段" class="headerlink" title="计算字段"></a>计算字段</h4><p>举个简单的例子，如果想要在一个搜索结果中既显示公司的名称，又显示公司的地址。我们无法直接</p>
+<p><code>SELECT name, adress FROM TABLE;</code>,因为这样显示的是两列搜索结果，有的计算字段就可以把两列搜索结果连接起来形成一个字段。</p>
+<p>当列中存储的数据不是我们所直接需要的时候，我们就需要计算字段，来对数据进行转化，计算来得到我们想要的结果。</p>
+<p>计算字段其实实质上也是一种列，只不过这个列是我们通过计算的到的。</p>
+<h4 id="拼接字段"><a href="#拼接字段" class="headerlink" title="拼接字段"></a>拼接字段</h4><p>拼接：将多个值联结起来形成一个值。</p>
+<p>在我们的数据库中，有vendor的name和country，如果我们需要name(location)形式的输出。这是单个值，但表中的数据存储在两个列中：vend_name和vend_country，此外还需要（）把数据括起来。但括号并没有存储在数据库中。</p>
+<p>这个时候的解决办法就是把两个列拼接起来。可以使用Concat()函数拼接数据。</p>
+<p><img src="/.com//image-20211124094002501.png" alt="image-20211124094002501"></p>
+<p><u>有的SQL语句是使用+或者||来实现拼接，但MySQL是使用Concat语句。</u></p>
+<p><u>Concat函数的形参列表没有指定多少元素，可以对多个元素进行拼接。</u></p>
+<p>在整理数据的时候如果我们想要删去两侧多余的空格，可以使用Trim()函数。</p>
+<p><code>SELECT Concat(RTrim(vend_name), &#39; (&#39;, RTrim(vend_country), &#39;)&#39;)   FROM vendors   ORDER BY vend_name;</code></p>
+<p>RTrim()函数是删去右边的所有空格，而LTrim()是删去左边的所有空格，Trim()是删去两侧的所有空格。</p>
+<h6 id="使用别名"><a href="#使用别名" class="headerlink" title="使用别名"></a>使用别名</h6><p>我们注意到，在上面的例子中，所显示出来的列的名字似乎就只是我们的计算字段，那如何对这个检索出来的结果起一个新的名称呢？</p>
+<p>我们可以使用别名，别名的关键字是AS。</p>
+<p><img src="/.com//image-20211124094724810.png" alt="image-20211124094724810"></p>
+<p>SELECT语句由原来的没有什么不同，但后面的文本AS表示创建了一个包含指定计算（这里是Concat函数）的名为vend_title的计算字段。</p>
+<h4 id="执行算术计算"><a href="#执行算术计算" class="headerlink" title="执行算术计算"></a>执行算术计算</h4><p>计算字段的另一用途是对检索出的数据进行算术计算。例如orders表包含所有的订单信息，orderitems包含每个订单的各项物品。</p>
+<p>例如这个例子表示订单号为20005的各项物品。</p>
+<p><img src="/.com//image-20211124100027035.png" alt="image-20211124100027035"></p>
+<p>现在要汇总单种物品的价格。</p>
+<p><img src="/.com//image-20211124100205140.png" alt="image-20211124100205140"></p>
+<p>这个样例中新增了一列expanded_price，这个是通过quantity * item_price得到的。</p>
+<p>MySQL中的算数计算包含常见的 +，-，*，/。</p>
+<h1 id="使用数据处理函数"><a href="#使用数据处理函数" class="headerlink" title="使用数据处理函数"></a>使用数据处理函数</h1><h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>SQL中的函数一般是用来对数据进行处理与转换。例如上一节的Trim()函数。</p>
+<h4 id="使用函数"><a href="#使用函数" class="headerlink" title="使用函数"></a>使用函数</h4><p>大多数SQL中都有以下函数：</p>
+<p>1.用于处理文本串的文本函数函数(如删除或添加指定值，转换值为大写或小写)。</p>
+<p>2.用于在数值数据上进行算数运算的数值函数(如返回绝对值，进行代数运算)。</p>
+<p>3.用于处理日期和时间值并从这些值中提取特定成分的日期和时间函数(如返回两个日期之差，检查日期是否有效)。</p>
+<p>4.返回DBMS正使用的特殊信息的系统函数(如返回用户登陆信息，检查版本细节)。</p>
+<p>系统函数一般不太会用到，接下来我们举几个例子来介绍一下前三个函数。</p>
+<h6 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h6><p>上一节已经看到过一个文本处理的函数，就是Trim()函数，还记得他的作用吗？</p>
+<p>下面是另一个例子，使用Upper()函数。</p>
+<p><img src="/.com//image-20211124192856053.png" alt="image-20211124192856053"></p>
+<p>在这个例子中，通过使用Upper()函数，将vend_name的文本数据转换为大写。</p>
+<p>下表列出了某些常见的文本处理函数。</p>
+<p><img src="/.com//image-20211124200039368.png" alt="image-20211124200039368"></p>
+<p>对于这些函数，不会一一的去讲解，因为这些函数可以通过MySQL命令行的help命令去了解，以left()为例。</p>
+<p><img src="/.com//image-20211124200210128.png" alt="image-20211124200210128"></p>
+<p>如上，(MySQL不严格区分大小写)，left()函数的具体用法是left(str, len),即参数为串和返回的字符个数。如果串为空(NULL)，则返回空(NULL)。如<code>SELECT left(&#39;foobarbar&#39;, 5);</code>则返回从左开始的5个字符，即fooba。通过help能够了解这些函数的用法。</p>
+<p>若想知道串的Soundex值请查询</p>
+<p>更多的文本处理函数请查询   <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/string-functions.html">https://dev.mysql.com/doc/refman/8.0/en/string-functions.html</a></p>
+<h6 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h6><p>日期和时间采用相应的数据类型和特殊的格式储存，但我们一般不使用这些格式，直只对日期和时间进行读取，统计和处理。</p>
+<p>下表是常用的日期和时间处理函数。</p>
+<p><img src="/.com//image-20211125091945247-16378193850851.png" alt="image-20211125091945247"></p>
+<p>同文本处理函数类似，通过help命令可以查看这些函数的使用方式。</p>
+<p>接下来看个简单的例子。(下面的例子可以帮助复习WHERE的使用)</p>
+<p>在表orders中有order_date的列，里面存储的是日期和时间。</p>
+<p><img src="/.com//image-20211125135721323.png" alt="image-20211125135721323"></p>
+<p>这个例子查找日期为2005-09-01的列，但这样查找可靠吗？</p>
+<p><img src="/.com//image-20211125135852863.png" alt="image-20211125135852863"></p>
+<p>通过查看列的属性我们可以知道order_date的数据类型是datetime，这是指其存储的数据是日期加时间。</p>
+<p><img src="/.com//image-20211125135952750.png" alt="image-20211125135952750"></p>
+<p>这个是其中存储的数据。例子中的时间全都是00：00：00，但实际并不可能是这样，这个时候order_date = ‘2005-09-01’就可能有些问题，我们的目的是查找日期在这一天的的列，这个时候我们就可以使用Date()函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id, order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Date(order_date) = &#x27;2005-09-01&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>还有一个例子是检索所有2005年九月下的订单。因为条件实际上有两个，一是2005年，还有一个是9月，我们可以使用and子句，因为Year()返回年份，Month()返回月份，即：</p>
+<p><img src="/.com//image-20211125140826872.png" alt="image-20211125140826872"></p>
+<p>这个例子就可以检索所有2005年九月的订单。</p>
+<p>更多日期和时间函数请查询：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/date-and-time-type-syntax.html">https://dev.mysql.com/doc/refman/8.0/en/date-and-time-type-syntax.html</a></p>
+<h6 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h6><p>数值处理函数主要用于代数，统计数据。较为简单也易于理解。</p>
+<p>下面是常用的数值处理函数。</p>
+<p><img src="/.com//image-20211125142006468.png" alt="image-20211125142006468"></p>
+<p>更多的数值处理函数请查询： <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html">https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/22/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A4/" rel="prev" title="MySQL必知必会4">
+      <i class="fa fa-chevron-left"></i> MySQL必知必会4
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/%E4%B8%B2%E7%9A%84Soundex%E5%80%BC/" rel="next" title="串的Soundex值">
+      串的Soundex值 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">创建计算字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">计算字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E5%AD%97%E6%AE%B5"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">拼接字段</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%AB%E5%90%8D"><span class="nav-number">1.0.0.2.0.1.</span> <span class="nav-text">使用别名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E7%AE%97%E6%9C%AF%E8%AE%A1%E7%AE%97"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">执行算术计算</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">使用数据处理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">使用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.2.0.1.</span> <span class="nav-text">文本处理函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.2.0.2.</span> <span class="nav-text">日期和时间处理函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">2.0.0.2.0.3.</span> <span class="nav-text">数值处理函数</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
